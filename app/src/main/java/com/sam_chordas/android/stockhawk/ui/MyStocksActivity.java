@@ -90,9 +90,12 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     mCursorAdapter = new QuoteCursorAdapter(this, null);
     recyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(this,
             new RecyclerViewItemClickListener.OnItemClickListener() {
-              @Override public void onItemClick(View v, int position) {
-                //TODO:
-                // do something on item click
+              @Override public void onItemClick(View v, int position)
+              {
+                Intent graphIntent = new Intent(mContext, StockGraphActivity.class);
+                mCursor.moveToPosition(position);
+                graphIntent.putExtra(getResources().getString(R.string.string_symbol), mCursor.getString(mCursor.getColumnIndex(getResources().getString(R.string.string_symbol))));
+                mContext.startActivity(graphIntent);
               }
             }));
     recyclerView.setAdapter(mCursorAdapter);
