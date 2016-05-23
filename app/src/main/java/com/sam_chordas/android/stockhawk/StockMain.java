@@ -26,7 +26,7 @@ public class StockMain extends Application
     @Override
     public void onCreate()
     {
-        EventBus myEventBus = EventBus.getDefault();
+
         instance = this;
         super.onCreate();
     }

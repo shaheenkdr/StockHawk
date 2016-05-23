@@ -34,6 +34,7 @@ public class Utils {
     ArrayList<ContentProviderOperation> batchOperations = new ArrayList<>();
     JSONObject jsonObject = null;
     JSONArray resultsArray = null;
+    EventBus myEventBus = EventBus.getDefault();
     try{
       jsonObject = new JSONObject(JSON);
       if (jsonObject != null && jsonObject.length() != 0){
@@ -63,8 +64,8 @@ public class Utils {
 
   private static void runError()
   {
-    EventBusValue val = new EventBusValue();
-    EventBus.getDefault().post(val.getVal());
+
+    EventBus.getDefault().post(new EventBusValue(0));
   }
 
   public static String truncateBidPrice(String bidPrice){

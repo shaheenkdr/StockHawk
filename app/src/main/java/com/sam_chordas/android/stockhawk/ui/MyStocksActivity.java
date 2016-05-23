@@ -168,6 +168,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
     public void onEvent(EventBusValue event)
     {
+        int temp = event.getVal();
         Snackbar.make(this.findViewById(android.R.id.content), "OOPS I don't know that :/", Snackbar.LENGTH_LONG).show();
     }
 

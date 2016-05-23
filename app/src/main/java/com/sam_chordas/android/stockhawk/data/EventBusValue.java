@@ -6,7 +6,12 @@ package com.sam_chordas.android.stockhawk.data;
 
 public class EventBusValue
 {
-    private static final int VALUE = 1;
+    private static int VALUE ;
+
+    public EventBusValue(int val)
+    {
+        this.VALUE = val;
+    }
 
     public static int getVal()
     {
