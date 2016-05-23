@@ -31,6 +31,7 @@ import static com.sam_chordas.android.stockhawk.StockMain.getContext;
 
 public class StockGraphActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>
 {
+    //
     private static final int CURSOR_LOADER_ID = 0;
     private Cursor mCursor;
     private LineChartView lineChartView;
