@@ -3,6 +3,8 @@ package com.sam_chordas.android.stockhawk;
 import android.app.Application;
 import android.content.Context;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Application class for the StockHawk
  * to get context from non-activity classes
@@ -22,7 +24,9 @@ public class StockMain extends Application
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate()
+    {
+        EventBus myEventBus = EventBus.getDefault();
         instance = this;
         super.onCreate();
     }
