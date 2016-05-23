@@ -1,9 +1,17 @@
 package com.sam_chordas.android.stockhawk.rest;
 
+import android.app.Activity;
 import android.content.ContentProviderOperation;
+import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
+
+import com.sam_chordas.android.stockhawk.StockMain;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
+import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
+
 import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,6 +25,7 @@ public class Utils {
   private static String LOG_TAG = Utils.class.getSimpleName();
 
   public static boolean showPercent = true;
+
 
   public static ArrayList quoteJsonToContentVals(String JSON){
     ArrayList<ContentProviderOperation> batchOperations = new ArrayList<>();
@@ -42,10 +51,17 @@ public class Utils {
           }
         }
       }
-    } catch (JSONException e){
-      Log.e(LOG_TAG, "String to JSON failed: " + e);
+    } catch (Exception e)
+    {
+      runError();
     }
     return batchOperations;
+  }
+
+  private static void runError()
+  {
+
+
   }
 
   public static String truncateBidPrice(String bidPrice){
