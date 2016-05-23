@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.sam_chordas.android.stockhawk.StockMain;
+import com.sam_chordas.android.stockhawk.data.EventBusValue;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by sam_chordas on 10/8/15.
@@ -60,8 +63,8 @@ public class Utils {
 
   private static void runError()
   {
-
-
+    EventBusValue val = new EventBusValue();
+    EventBus.getDefault().post(val.getVal());
   }
 
   public static String truncateBidPrice(String bidPrice){
