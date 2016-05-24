@@ -80,7 +80,7 @@ public class StockGraphActivity extends AppCompatActivity implements LoaderManag
     }
 
     /**
-     *  method to begin sketching the graph
+     *  method to begin sketching the graph in activity
      */
     private void fillLineSet(){
         mCursor.moveToFirst();
