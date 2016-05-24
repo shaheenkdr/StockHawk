@@ -8,6 +8,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import com.db.chart.Tools;
@@ -22,7 +23,7 @@ import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static com.sam_chordas.android.stockhawk.StockMain.getContext;
+
 
 /**
  * Created by oblivion on 5/23/2016.
@@ -31,12 +32,12 @@ import static com.sam_chordas.android.stockhawk.StockMain.getContext;
 
 public class StockGraphActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>
 {
-    //
+
     private static final int CURSOR_LOADER_ID = 0;
     private Cursor mCursor;
     private LineChartView lineChartView;
     private LineSet mLineSet;
-    int maxRange,minRange;
+    private int maxRange,minRange;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,9 @@ public class StockGraphActivity extends AppCompatActivity implements LoaderManag
         getLoaderManager().initLoader(CURSOR_LOADER_ID, args, this);
     }
 
+    /**
+     * method to instantiate and return a loader for the given ID
+     */
     @Override public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(this, QuoteProvider.Quotes.CONTENT_URI,
                 new String[]{ QuoteColumns.BIDPRICE},
@@ -58,16 +62,26 @@ public class StockGraphActivity extends AppCompatActivity implements LoaderManag
                 null);
     }
 
+    /**
+     *  method to start graphing once the loader has finished loading
+     */
     @Override public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mCursor = data;
         findRange(mCursor);
         fillLineSet();
     }
 
+
+    /**
+     * method to handle if the loader is reset
+     */
     @Override public void onLoaderReset(Loader<Cursor> loader) {
 
     }
 
+    /**
+     *  method to begin sketching the graph
+     */
     private void fillLineSet(){
         mCursor.moveToFirst();
         for (int i = 0; i < mCursor.getCount(); i++){
@@ -75,17 +89,20 @@ public class StockGraphActivity extends AppCompatActivity implements LoaderManag
             mLineSet.addPoint("test " + i, price);
             mCursor.moveToNext();
         }
-        mLineSet.setColor(getResources().getColor(R.color.line_set))
+        mLineSet.setColor(ContextCompat.getColor(getApplicationContext(), R.color.line_set))
                 .setDotsStrokeThickness(Tools.fromDpToPx(2))
-                .setDotsStrokeColor(getResources().getColor(R.color.line_stroke))
-                .setDotsColor(getResources().getColor(R.color.line_dots));
+                .setDotsStrokeColor(ContextCompat.getColor(getApplicationContext(), R.color.line_stroke))
+                .setDotsColor(ContextCompat.getColor(getApplicationContext(), R.color.line_dots));
         lineChartView.addData(mLineSet);
         lineChartView.show();
     }
 
+    /**
+     *  private method that sets the attributes of the graph
+     */
     private void initLineChart() {
         Paint gridPaint = new Paint();
-        gridPaint.setColor(getResources().getColor(R.color.line_paint));
+        gridPaint.setColor(ContextCompat.getColor(getApplicationContext(), R.color.line_paint));
         gridPaint.setStyle(Paint.Style.STROKE);
         gridPaint.setAntiAlias(true);
         gridPaint.setStrokeWidth(Tools.fromDpToPx(1f));
@@ -93,17 +110,21 @@ public class StockGraphActivity extends AppCompatActivity implements LoaderManag
                 .setAxisBorderValues(minRange-100, maxRange+100, 50)
                 .setXLabels(AxisController.LabelPosition.OUTSIDE)
                 .setYLabels(AxisController.LabelPosition.OUTSIDE)
-                .setLabelsColor(getResources().getColor(R.color.line_labels))
+                .setLabelsColor(ContextCompat.getColor(getApplicationContext(), R.color.line_labels))
                 .setXAxis(false)
                 .setYAxis(false)
                 .setBorderSpacing(Tools.fromDpToPx(5))
                 .setGrid(ChartView.GridType.HORIZONTAL, gridPaint);
     }
-    public void findRange(Cursor mCursor)
+
+
+    /**
+     * method to find the range of stock values in different days
+     */
+    private void findRange(Cursor mCursor)
     {
-        ArrayList<Float> mArrayList = new ArrayList<Float>();
+        ArrayList<Float> mArrayList = new ArrayList<>();
         for(mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()) {
-            // The Cursor is now set to the right position
             mArrayList.add(Float.parseFloat(mCursor.getString(mCursor.getColumnIndex(QuoteColumns.BIDPRICE))));
         }
         maxRange = Math.round(Collections.max(mArrayList));
