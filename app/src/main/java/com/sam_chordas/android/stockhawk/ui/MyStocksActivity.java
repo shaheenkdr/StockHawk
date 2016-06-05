@@ -94,7 +94,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
               {
                 Intent graphIntent = new Intent(mContext, StockGraphActivity.class);
                 mCursor.moveToPosition(position);
-                graphIntent.putExtra(getResources().getString(R.string.string_symbol), mCursor.getString(mCursor.getColumnIndex(getResources().getString(R.string.string_symbol))));
+                graphIntent.putExtra(getResources().getString(R.string.symbol_of_stock), mCursor.getString(mCursor.getColumnIndex(getResources().getString(R.string.symbol_of_stock))));
                 mContext.startActivity(graphIntent);
               }
             }));

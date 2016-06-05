@@ -33,10 +33,7 @@ public class WidgetService extends RemoteViewsService
                     data.close();
                 }
 
-                // This method is called by the app hosting the widget (e.g., the launcher)
-                // However, our ContentProvider is not exported so it doesn't have access to the
-                // data. Therefore we need to clear (and finally restore) the calling identity so
-                // that calls use our process and permission
+
                 final long identityToken = Binder.clearCallingIdentity();
 
                 // This is the same query from MyStocksActivity
@@ -78,12 +75,12 @@ public class WidgetService extends RemoteViewsService
 
                 // Bind data to the views
                 views.setTextViewText(R.id.stock_symbol, data.getString(data.getColumnIndex
-                        (getResources().getString(R.string.string_symbol))));
+                        (getResources().getString(R.string.symbol_of_stock))));
 
                 if (data.getInt(data.getColumnIndex(QuoteColumns.ISUP)) == 1) {
-                    views.setInt(R.id.change, getResources().getString(R.string.string_set_background_resource), R.drawable.percent_change_pill_green);
+                    views.setInt(R.id.change, getResources().getString(R.string.set_background_resource), R.drawable.percent_change_pill_green);
                 } else {
-                    views.setInt(R.id.change, getResources().getString(R.string.string_set_background_resource), R.drawable.percent_change_pill_red);
+                    views.setInt(R.id.change, getResources().getString(R.string.set_background_resource), R.drawable.percent_change_pill_red);
                 }
 
                 if (Utils.showPercent) {
@@ -93,7 +90,7 @@ public class WidgetService extends RemoteViewsService
                 }
 
                 final Intent fillInIntent = new Intent();
-                fillInIntent.putExtra(getResources().getString(R.string.string_symbol), data.getString(data.getColumnIndex(QuoteColumns.SYMBOL)));
+                fillInIntent.putExtra(getResources().getString(R.string.symbol_of_stock), data.getString(data.getColumnIndex(QuoteColumns.SYMBOL)));
                 views.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
 
                 return views;

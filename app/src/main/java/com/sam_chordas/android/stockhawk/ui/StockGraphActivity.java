@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
 
 import com.db.chart.Tools;
 import com.db.chart.model.LineSet;
@@ -39,15 +40,18 @@ public class StockGraphActivity extends AppCompatActivity implements LoaderManag
     private LineSet mLineSet;
     private int maxRange,minRange;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState)
+    {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_line_graph);
         mLineSet = new LineSet();
         lineChartView = (LineChartView) findViewById(R.id.linechart);
         initLineChart();
         Intent intent = getIntent();
         Bundle args = new Bundle();
-        args.putString(getResources().getString(R.string.string_symbol), intent.getStringExtra(getResources().getString(R.string.string_symbol)));
+        args.putString(getResources().getString(R.string.symbol_of_stock), intent.getStringExtra(getResources().getString(R.string.symbol_of_stock)));
         getLoaderManager().initLoader(CURSOR_LOADER_ID, args, this);
     }
 
@@ -58,7 +62,7 @@ public class StockGraphActivity extends AppCompatActivity implements LoaderManag
         return new CursorLoader(this, QuoteProvider.Quotes.CONTENT_URI,
                 new String[]{ QuoteColumns.BIDPRICE},
                 QuoteColumns.SYMBOL + " = ?",
-                new String[]{args.getString(getResources().getString(R.string.string_symbol))},
+                new String[]{args.getString(getResources().getString(R.string.symbol_of_stock))},
                 null);
     }
 
