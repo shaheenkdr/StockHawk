@@ -24,6 +24,6 @@
   <string name="error_no_symbol"  translatable="false">Error! symbol Not found</string>
   <string name="symbol_found" translatable="false">Success! added new Symbol</string>
   <string name="stock_saved" translatable="false">This stock is already saved!</string>
-  <string name="set_background_resource" translatable="false">setBackgroundResource</string>
+  <string name="set_background_resource" translatable="false">setBackgroundResource </string>
 </resources>
 
