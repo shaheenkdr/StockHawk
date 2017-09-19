@@ -29,7 +29,7 @@ of different organizations in a specific time range. The app was developed as pa
 ## Android Developer Nanodegree
 [![udacity][1]][2]
 
-[1]: ../master/art/nanodegree-logo.png
+[1]: ../master/nanodegree-logo.png
 [2]: https://www.udacity.com/course/android-developer-nanodegree--nd801
 
 ## License
